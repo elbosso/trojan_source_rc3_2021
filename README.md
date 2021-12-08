@@ -1,22 +1,56 @@
-# slides
+# Trojan SQL
 
-This is a template for projects with presentations or slides. It is strongly encouraged to use it as such (but you can of course go old school and do a fork)
+## How to mess up other peoples databases by spiking SQL statements with spurious Unicode control characters
 
-It holds plenty of slides giving a small glimpse of what is possible.
+### Motivation
 
-It uses [reveal.js](https://revealjs.com/) as foundation - if you have questions about how to do something - please see there...
+The idea came about when I saw someone on [mastodon](https://mastodon.social/@elbosso) creating a table
+in PostgreSQL with animal emojis for column names and reading the [Trojan Source paper](https://arxiv.org/abs/2111.00169).
 
-The presentation skeleton is done in a way that you only have to write markdown to fill it: You have to edit [slides.md](slides.md) to do so. 
-But it is of course possible to unleash the full power of
-[reveal.js](https://revealjs.com/) by editing [index.html](index.html).
+The final push to try and propose this as a presentation to be held on this years [rC3 2021 NOWHERE](https://events.ccc.de/2021/11/08/rc3-2021-nowhere/)
+end event was a major incident i beheld at my day job.
 
-Whenever you commit changes to the project, it is rebuilt via a CI/CD pipeline so that the live version (uses pages functionality) is always up to date.
+I asked myself: "Is it possible to extend this kind of attack on databases using specially crafted SQL?"
 
-You will - regardless whether you forked or used the template - have to edit the link to the live presentation here:
+### What needed to be done?
 
-[Live](https://elbosso.github.io/reveal.js-slides-template)
+* Craft SQL statements that seem to a human reviewer than they are interpreted by the DBMS
+* Those SQL statements must not trigger any syntax violation exceptions when trying to get them executed by the DBMS
 
-You can of course write the presentation locally and dont have to wait for the github pipeline to run after each commit - 
-for that you just have to open [index.html](index.html) in a recent browser.
-But beware: It might not work out of the box as for example firefox blocks loading local files because of 
-[CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSRequestNotHttp).
+### What did I do?
+
+I checked for vulnerabilities in 
+
+* Source code management (Git-Lab|-Hub|-ea)
+* Editors (IDE)
+* Database tools
+* Databases
+
+Of course, this was (and could not be) exhaustive but I took a few samples from the vast landscape of tools and application I thought 
+susceptible to such an attack - and I was rewarded!
+
+### What did I find?
+
+Editors and IDEs have various degrees to which they make it obvious to a reviewer that there is something not quite right or even dubious
+about the SQL statement in question.
+
+The source code management solutions I reviewed had more surprises for me in stock: Github - already informed about Trojan Source by its original 
+finders - had still no countermeasures in place in issue descriptions ans issue comments while gists and checked in source files triggered a warning message. I therefore
+duly filed a security report but this was rejected on the grounds that this was not deemed a threat. I do think otherwise - if a github enterprise account 
+of some team manager or similar ist
+hacked and from within it comments are posted saying "I need you to put this SQL forward to production" I am sure, this succeeds in a few cases when I think one would be to many -
+especially if the one dealing with the issue inspects the SQL in github and can see nothing wrong with it.
+
+With Gitea the situation was even worse: Nowhere inside it there is any warning about suspicious charachters inside source code - not only for SQL but for none of
+the languages analyzed in the original paper - there is a [pull request](https://github.com/go-gitea/gitea/pull/17562) from Nov. 5 but the discussion about the color and wording of the warning to display still rages on.
+I would think it much more important to display the warning and debate such minor points later - but obviuosly my opinion differs from the one held by the gitea maintainers.
+
+### Where to go from here?
+There are many Ideas one could follow - here are only a few of them:
+
+* Analysis of applications on Mac
+* Management of instigated bug reports
+* Trojan NoSQL perhaps?
+* Other interpreted or Domain Specific Languages (DSLs)
+* Urge other developers to mitigate
+
