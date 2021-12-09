@@ -14,7 +14,7 @@ I asked myself: "Is it possible to extend this kind of attack on databases using
 
 ### What needed to be done?
 
-* Craft SQL statements that seem to a human reviewer than they are interpreted by the DBMS
+* Craft SQL statements that appear differently to a human reviewer from how they are interpreted by the DBMS
 * Those SQL statements must not trigger any syntax violation exceptions when trying to get them executed by the DBMS
 
 ### What did I do?
