@@ -6,13 +6,15 @@
     <meta content="utf-8" http-equiv="encoding">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="reveal.js/dist/reveal.css">
-    <link rel="stylesheet" href="reveal.js/dist/theme/white.css">
+    <!--link rel="stylesheet" href="dist/theme/white.css"-->
+    <!--link rel="stylesheet" href="dist/theme/serif.css"-->
+    <link rel="stylesheet" href="reveal.js/dist/theme/solarized.css">
 	<link rel="stylesheet" href="css/highlight/atom-one-light.css">
 	<link rel="stylesheet" href="css/customizations.css">
 	<link rel="stylesheet" href="css/fonts/fontawesome/css/fontawesome.min.css">
 </head>
 
-<body>
+<body style="font-size: 80%; ">
 
     <div class="reveal">
         <div class="slides">
@@ -99,14 +101,29 @@ public abstract strictfp class L2Char extends L2Object {
 		    bottom: 0%;
 		    left: 0%;
 		}
+		#footer-right {
+		    position: absolute;
+		    bottom: 0%;
+		    right: 0%;
+		    color:rgb(0, 128, 128);
+		    font-size:0.5em;
+		}
 	</style>
 
 	<!-- 2. Create hidden header/footer <div> -->
 	<div id="hidden" style="display:none;">
 		<div id="header">
-		    <div id="header-left"></div>
-		    <div id="header-right"></div>
-		    <div id="footer-left"><a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</div>
+		    <div id="header-left">
+		    	<div style="color:rgb(0, 181, 218); font-size:0.4em;">Attribution 4.0 International (CC BY 4.0)
+		    	</div>
+	    		<div>
+	    			<img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" width="48px"/>
+	    			<img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" width="48px"/>
+	    		</div>
+	    	</div>
+		    <div id="header-right"><!--hr--></div>
+		    <div id="footer-left"><!--fl--></div>
+		    <div id="footer-right">https://gitlab.com/elbosso/ssh-security</div>
 		</div>
 	</div>
 
